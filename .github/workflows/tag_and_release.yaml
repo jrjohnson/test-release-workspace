@@ -11,6 +11,8 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
+    - run: pwd
+    - run: ls
     - run: ls .github/scripts/
     - run: node -v
     - name: Validate releaseType
