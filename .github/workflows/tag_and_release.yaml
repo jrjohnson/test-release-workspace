@@ -11,6 +11,6 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
+    - run: cat README.md
     - name: Validate releaseType
-      working-directory: ./github/scripts
-      run: releaseType=${{ github.event.inputs.releaseType }} node validateReleaseType.js
+      run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
