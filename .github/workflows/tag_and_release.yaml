@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: pwd
-    - run: ls
+    - run: ls -a .
     - run: ls .github/scripts/
     - run: node -v
     - name: Validate releaseType
