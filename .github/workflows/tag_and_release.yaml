@@ -1,4 +1,4 @@
-name: Tag and Create a Release
+name: Tag Version
 
 on:
   workflow_dispatch:
@@ -22,5 +22,5 @@ jobs:
         git config user.email "info@iliosproject.org"
     - name: Increment Version
       run: npm version ${{ github.event.inputs.releaseType }}
-    - run: git diff origin/main
-    - run: git log
+    - name: Push Changes
+      run: git push --follow-tags
