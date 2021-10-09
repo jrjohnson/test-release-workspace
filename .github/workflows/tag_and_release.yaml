@@ -11,6 +11,6 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-    - run: cat README.md
+    - uses: actions/checkout@v2
     - name: Validate releaseType
       run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
