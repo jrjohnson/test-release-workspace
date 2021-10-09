@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       releaseType:
-        description: 'Semver Release Type (major,minor,patcch)'
+        description: 'Semver Release Type (major,minor,patch)'
         required: true
 
 jobs:
@@ -15,8 +15,8 @@ jobs:
     - name: Validate releaseType
       run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
     - run: git diff
-    - run: git tags
+    - run: git tag
     - name: Increment Version
       run: npm version ${{ github.event.inputs.releaseType }}
     - run: git diff
-    - run: git tags
+    - run: git tag
