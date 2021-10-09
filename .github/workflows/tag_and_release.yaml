@@ -16,10 +16,11 @@ jobs:
           token: ${{ secrets.ZORGBORT_TOKEN }}
     - name: Validate releaseType
       run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
+    - name: Setup Git
+      run |
+        git config user.name "Zorgbort"
+        git config user.email "info@iliosproject.org"
     - name: Increment Version
-      run: |
-        # git config --global user.name "Zorgbort"
-        # git config --global user.email "info@iliosproject.org"
-        npm version ${{ github.event.inputs.releaseType }}
+      run: npm version ${{ github.event.inputs.releaseType }}
     - run: git diff origin/main
     - run: git log
