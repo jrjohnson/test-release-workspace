@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+          token: ${{ secrets.ZORGBORT_TOKEN }}
     - name: Validate releaseType
       run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
-    - run: git diff origin/main
-    - run: git tag
     - name: Increment Version
       run: |
-        git config --global user.name "Zorgbort"
-        git config --global user.email "info@iliosproject.org"
+        # git config --global user.name "Zorgbort"
+        # git config --global user.email "info@iliosproject.org"
         npm version ${{ github.event.inputs.releaseType }}
     - run: git diff origin/main
-    - run: git tag
+    - run: git log
