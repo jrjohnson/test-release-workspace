@@ -1,0 +1,15 @@
+name: Tag and Create a Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'Semver Release Type (major,minor,patcch)'
+        required: true
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate releaseType
+      run: ${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
