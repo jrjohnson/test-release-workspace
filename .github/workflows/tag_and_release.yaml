@@ -13,4 +13,4 @@ jobs:
     steps:
     - run: node -v
     - name: Validate releaseType
-      run: node .github/scripts/validateReleaseType.js
+      run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
