@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Validate releaseType
-      run: ${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
+      run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
