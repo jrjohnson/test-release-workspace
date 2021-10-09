@@ -11,6 +11,7 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
+    - run: ls .github/scripts/
     - run: node -v
     - name: Validate releaseType
       run: releaseType=${{ github.event.inputs.releaseType }} node .github/scripts/validateReleaseType.js
