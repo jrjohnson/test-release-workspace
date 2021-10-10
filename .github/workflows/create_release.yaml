@@ -29,9 +29,8 @@ jobs:
       id: notes
       run: |
         NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{ steps.previousTag.outputs.tag }} ${{steps.nextTag.outputs.tag}})
-        # echo ${NOTES}
-        # NOTES="${NOTES//$'\n'/'%0A'}"
         echo ${NOTES}
+        NOTES="${NOTES//$'\n'/'%0A'}"
         echo "::set-output name=releaseNotes::$NOTES"
     - uses: ncipollo/release-action@v1
       with:
