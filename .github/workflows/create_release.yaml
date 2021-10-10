@@ -1,0 +1,31 @@
+name: Create Release
+
+on: 
+  push:
+    tags:
+    - '*'
+
+jobs:
+  createNotes:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Tag
+      id: tag
+      run: |
+        echo ::set-output name=next::${GITHUB_REF#refs/tags/}
+        PREVIOUS_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
+        echo ${PREVIOUS_TAG}
+        echo ::set-output name=previous::
+    - uses: actions/setup-node@v2
+    - name: Generate Release Notes
+      id: notes
+      run: |
+        NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{steps.tag.outputs.previous}} ${{steps.tag.outputs.next}})
+        echo ${NOTES}
+        echo ::set-output content=releaseNotes::${NOTES}
+    - run: echo ${{steps.notes.content}}
+    # - uses: ncipollo/release-action@v1
+    #   with:
+    #     body: ${{steps.notes.content}}
+    #     token: ${{ secrets.GITHUB_TOKEN }}
