@@ -25,14 +25,9 @@ jobs:
         echo ${NEW_TAG}
         echo ::set-output name=tag::${NEW_TAG}
     - uses: actions/setup-node@v2
-    - name: Generate Release Notes
-      id: notes
-      run: |
-        NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{ steps.previousTag.outputs.tag }} ${{steps.nextTag.outputs.tag}})
-        echo ${NOTES}
-        echo ::set-output name=releaseNotes::${NOTES}
-    - run: echo ${{steps.notes.content}}
+      with:
+        cache: 'npm'
     - uses: ncipollo/release-action@v1
       with:
-        body: ${{steps.notes.releaseNotes}}
+        body: $(npx generate-github-release-notes jrjohnson test-release-workspace ${{ steps.previousTag.outputs.tag }} ${{steps.nextTag.outputs.tag}})
         token: ${{ secrets.GITHUB_TOKEN }}
