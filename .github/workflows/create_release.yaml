@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: 'Get Previous tag'
+        id: previoustag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
     - name: Get Tag
-      id: tag
+      id: nexttag
       run: |
-        NEW_TAG=${GITHUB_REF#refs/tags/}
-        echo ${NEW_TAG}
-        echo ::set-output name=new::${NEW_TAG}
         PREVIOUS_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
         echo ${PREVIOUS_TAG}
         echo ::set-output name=previous::${PREVIOUS_TAG}
@@ -25,9 +25,9 @@ jobs:
       run: |
         NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{steps.tag.outputs.previous}} ${{steps.tag.outputs.new}})
         echo ${NOTES}
-        echo ::set-output content=releaseNotes::${NOTES}
+        echo ::set-output name=releaseNotes::${NOTES}
     - run: echo ${{steps.notes.content}}
     # - uses: ncipollo/release-action@v1
     #   with:
-    #     body: ${{steps.notes.content}}
+    #     body: ${{steps.notes.releaseNotes}}
     #     token: ${{ secrets.GITHUB_TOKEN }}
