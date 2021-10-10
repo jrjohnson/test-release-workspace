@@ -18,6 +18,7 @@ jobs:
     - name: Get New Tag
       id: nextTag
       run: |
+        git tag
         NEW_TAG=${GITHUB_REF#refs/tags/}
         echo ${NEW_TAG}
         echo ::set-output name=tag::${NEW_TAG}
