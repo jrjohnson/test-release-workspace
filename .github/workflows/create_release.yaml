@@ -25,8 +25,6 @@ jobs:
         echo ${NEW_TAG}
         echo ::set-output name=tag::${NEW_TAG}
     - uses: actions/setup-node@v2
-      with:
-        cache: 'npm'
     - uses: ncipollo/release-action@v1
       with:
         body: $(npx generate-github-release-notes jrjohnson test-release-workspace ${{ steps.previousTag.outputs.tag }} ${{steps.nextTag.outputs.tag}})
