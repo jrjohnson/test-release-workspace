@@ -13,15 +13,17 @@ jobs:
     - name: Get Tag
       id: tag
       run: |
-        echo ::set-output name=next::${GITHUB_REF#refs/tags/}
+        NEW_TAG=${GITHUB_REF#refs/tags/}
+        echo ${NEW_TAG}
+        echo ::set-output name=new::${NEW_TAG}
         PREVIOUS_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
         echo ${PREVIOUS_TAG}
-        echo ::set-output name=previous::
+        echo ::set-output name=previous::${PREVIOUS_TAG}
     - uses: actions/setup-node@v2
     - name: Generate Release Notes
       id: notes
       run: |
-        NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{steps.tag.outputs.previous}} ${{steps.tag.outputs.next}})
+        NOTES=$(npx generate-github-release-notes jrjohnson test-release-workspace ${{steps.tag.outputs.previous}} ${{steps.tag.outputs.new}})
         echo ${NOTES}
         echo ::set-output content=releaseNotes::${NOTES}
     - run: echo ${{steps.notes.content}}
