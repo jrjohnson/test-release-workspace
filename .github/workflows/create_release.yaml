@@ -13,7 +13,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get Previous Tag
-      id: previousT
+      id: previousTag
       run: |
         PREVIOUS_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
         echo ${PREVIOUS_TAG}
@@ -21,7 +21,6 @@ jobs:
     - name: Get New Tag
       id: nextTag
       run: |
-        git tag
         NEW_TAG=${GITHUB_REF#refs/tags/}
         echo ${NEW_TAG}
         echo ::set-output name=tag::${NEW_TAG}
@@ -33,7 +32,7 @@ jobs:
         echo ${NOTES}
         echo ::set-output name=releaseNotes::${NOTES}
     - run: echo ${{steps.notes.content}}
-    # - uses: ncipollo/release-action@v1
-    #   with:
-    #     body: ${{steps.notes.releaseNotes}}
-    #     token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: ncipollo/release-action@v1
+      with:
+        body: ${{steps.notes.releaseNotes}}
+        token: ${{ secrets.GITHUB_TOKEN }}
