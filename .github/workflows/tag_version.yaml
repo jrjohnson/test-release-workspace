@@ -15,7 +15,7 @@ jobs:
       with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
     - name: Validate releaseType
-      run: npx is-in-string ${{ github.event.inputs.releaseType }} major,minor,patch
+      run: npx in-string-list ${{ github.event.inputs.releaseType }} major,minor,patch
     - name: Setup Git
       run: |
         git config user.name Zorgbort
