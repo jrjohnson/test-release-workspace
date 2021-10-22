@@ -34,6 +34,6 @@ jobs:
         git config user.name Zorgbort
         git config user.email info@iliosproject.org
     - name: Increment Version
-      run: git tag v$(npx semver --increment ${{ github.event.inputs.releaseType }} ${{ steps.newTag.outputs.tag }}) -m "Tagging the "${{ steps.newTag.outputs.tag }} release"
+      run: git tag v$(npx semver --increment ${{ github.event.inputs.releaseType }} ${{ steps.newTag.outputs.tag }}) -m "Tagging the ${{ steps.newTag.outputs.tag }} release"
     - name: Push Changes
       run: git push --tags
